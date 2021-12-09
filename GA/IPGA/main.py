@@ -31,16 +31,17 @@ def valid_path(path: str) -> Path:
 
 
 def ga_start(max_iters, max_time):
+
     global start_time
 
-    min_nodes = 2
-    max_nodes = 30
-    #     max_nodesodes = None
+    min_nodes = N / 20
+    max_nodes = N / 2
+    #     max_nodesodes = Nonex
     populations, breaks = generate_populations(POPULATION, N, M, min_nodes, max_nodes)
     global_best = sys.maxsize
 
     fitness_val = []
-    # print("min:{}, max:{}".format(min_nodes, max_nodes))
+    print("min:{}, max:{}".format(min_nodes, max_nodes))
     for i in range(max_iters):
         if time.time() - start_time >= max_time:
             break
