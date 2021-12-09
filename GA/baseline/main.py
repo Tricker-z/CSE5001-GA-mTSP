@@ -1,5 +1,6 @@
 import re
 import sys
+import time
 import progressbar
 import matplotlib.pyplot as plt
 
@@ -46,6 +47,7 @@ def main() -> int:
     globalRoute = pop.getFittest()
     print ('Initial minimum distance: ' + str(globalRoute.getDistance()))
     
+    start_time = time.time()
     # Start evolving
     pbar = progressbar.ProgressBar()
     for i in pbar(range(numGenerations)):
@@ -58,7 +60,8 @@ def main() -> int:
     
     print ('Global minimum distance: ' + str(globalRoute.getDistance()))
     print ('Final Route: ' + globalRoute.toString())
-    
+    print (f'Running time: {(time.time() - start_time)}s')
+
     fig = plt.figure()
     plt.plot(xaxis, yaxis, 'r-')
     plt.show()
