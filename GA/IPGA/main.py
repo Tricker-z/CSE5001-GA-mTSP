@@ -15,6 +15,8 @@ def parse_args():
                         help='Population size')
     parser.add_argument('-m', '--sales', type=int, default=5,
                         help='Number of salesmen')
+    parser.add_argument('-t', '--time', type=int, default=100,
+                        help='Max running time')
     return parser.parse_args()
 
 
@@ -28,7 +30,9 @@ def valid_path(path: str) -> Path:
     return abspath.resolve()
 
 
-def ga_start(max_iters):
+def ga_start(max_iters, max_time):
+    global start_time
+
     min_nodes = 2
     max_nodes = 30
     #     max_nodesodes = None
@@ -38,6 +42,9 @@ def ga_start(max_iters):
     fitness_val = []
     # print("min:{}, max:{}".format(min_nodes, max_nodes))
     for i in range(max_iters):
+        if time.time() - start_time >= max_time:
+            break
+
         fitness_list = [cal_fitness(populations[j], breaks[j], N, row_data) for j in range(POPULATION)]
 
         global_best = min(global_best, min(fitness_list))
@@ -73,10 +80,10 @@ def ga_start(max_iters):
 
 
 def main():
-    global N, M, POPULATION, row_data
-
+    global N, M, POPULATION, row_data, start_time
+    start_time = time.time()
     args = parse_args()
-    POPULATION, M = args.pop, args.sales
+    POPULATION, M, max_time = args.pop, args.sales, args.time
 
     file_path_tmp = args.input
     row_data = load_data(file_path_tmp)
@@ -84,8 +91,7 @@ def main():
 
     time_start = time.time()
 
-    for i in range(RUNS):
-        ga_start(MAX_ITERS)
+    ga_start(MAX_ITERS, max_time)
 
     time_end = time.time()
     print("Running time: ", (time_end - time_start))
@@ -98,6 +104,7 @@ row_data = []
 N = len(row_data)
 M = 5
 POPULATION = 100
+start_time = 0
 
 if __name__ == "__main__":
     sys.exit(main())
