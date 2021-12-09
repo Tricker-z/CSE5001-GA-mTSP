@@ -10,7 +10,7 @@ from mtsp.vertex import Vertex
 from mtsp.population import Population
 from mtsp.galogic import GA
 
-NUM_GENERATIONS = 5000
+NUM_GENERATIONS = 20000
 
 def parse_args():
     '''parse arguments'''
