@@ -4,7 +4,7 @@ import scipy.stats as stats
 
 from pathlib import Path
 
-folder_path = Path('res/pr226')
+folder_path = Path('res/pr152')
 
 def parse_dist(fpath):
     global_dist_pattern = re.compile(r'^Global minimum distance: (?P<dist>\d+.\d+)$')
