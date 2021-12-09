@@ -48,7 +48,7 @@ class GA:
         route1 = offspring.routes[idx1]
         route2 = offspring.routes[idx2]
 
-        mutate_num = random.randint(1, min(len(route1), len(route2))-1)
+        mutate_num = random.randint(0, min(len(route1), len(route2))-1)
 
         for _ in range(mutate_num):
             rand_idx1 = random.randint(1, len(route1)-1)

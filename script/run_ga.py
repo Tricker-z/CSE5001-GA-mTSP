@@ -1,23 +1,50 @@
+import os
 import sys
 import subprocess
 
+from argparse import ArgumentParser
+from pathlib import Path
 from shlex import split
 
-RUN_NUM  = 1
-LOG_PATH = "log/mtsp51/baseline.log"
+
+ga2path = {
+    'baseline' : 'GA/baseline/main.py',
+    'vns-ga'   : 'GA/vns-ga/main.py',
+    'ipga'     : ''
+}
+
+
+def parse_args():
+    parser = ArgumentParser(description='Running scirpt for Ga')
+    parser.add_argument('-n', '--number', type=int, default=30,
+                        help='Number of repeat runs')
+    parser.add_argument('-a', '--algorithm', type=str, required=True,
+                        help='GA from baseline, vns-ga, ipga')
+    parser.add_argument('-i', '--input', type=Path, required=True,
+                        help='Path of the input for mTSP')
+    parser.add_argument('-o', '--output', type=Path, required=True,
+                        help='Path of the output log file')
+    return parser.parse_args()
 
 
 def run(cmd, logfile):
     p = subprocess.Popen(cmd, stdout=logfile)
     return p
 
-
 def main():
-    log = open(LOG_PATH, 'a+')
-    cmd = f'python GA/baseline/main.py -i data/mtsp51.txt'
+    args = parse_args()
+    if args.algorithm not in ga2path.keys():
+        raise Exception('Algorithm should select from [baseline, vns-ga, ipga')
+    ga_path = ga2path[args.algorithm]
     
-    for idx in range(RUN_NUM):
-        print(f'Running id: {idx}')
+    log_path = args.output
+    if not log_path.exists():
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    log = open(log_path, 'a+')
+    cmd = f'python {ga_path} -i {args.input}'
+    
+    for idx in range(args.number):
         run(split(cmd), log)
 
     log.close()
