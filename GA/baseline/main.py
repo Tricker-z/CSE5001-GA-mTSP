@@ -2,7 +2,7 @@ import re
 import sys
 import time
 import progressbar
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from argparse import ArgumentParser, ArgumentTypeError
 from pathlib import Path
@@ -59,12 +59,12 @@ def main() -> int:
         xaxis.append(i)
     
     print ('Global minimum distance: ' + str(globalRoute.getDistance()))
-    print ('Final Route: ' + globalRoute.toString())
     print (f'Running time: {(time.time() - start_time)}s')
+    print ('Final Route: ' + globalRoute.toString())
 
-    fig = plt.figure()
-    plt.plot(xaxis, yaxis, 'r-')
-    plt.show()
+    # fig = plt.figure()
+    # plt.plot(xaxis, yaxis, 'r-')
+    # plt.show()
     
     return 0
 
