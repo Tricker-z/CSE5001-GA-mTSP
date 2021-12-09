@@ -1,5 +1,6 @@
 import re
 import sys
+import time
 import progressbar
 
 from argparse import ArgumentParser, ArgumentTypeError
@@ -7,11 +8,9 @@ from pathlib import Path
 
 from mtsp.vertex import Vertex
 from mtsp.population import Population
-from mtsp.ga import GA
+from mtsp.galogic import GA
 
-
-num_generations = 5000
-
+NUM_GENERATIONS = 5000
 
 def parse_args():
     '''parse arguments'''
@@ -63,16 +62,17 @@ def main() -> int:
     global_route = pop.get_fittest()
     print(f'Initial minimum distance: {global_route.get_dist()}')
 
+    start_time = time.time()
     pbar = progressbar.ProgressBar()
-
-    for _ in pbar(range(num_generations)):
-        GA.evolve_population(pop)
-        local_route = pop.get_fittest()
+    for _ in pbar(range(NUM_GENERATIONS)):
+        local_route = GA.evolve_population(pop)
         if global_route.get_dist() > local_route.get_dist():
             global_route = local_route
     
     print(f'Global minimum distance: {global_route.get_dist()}')
-    
+    print(f'Running time: {time.time() - start_time}s')
+    print(global_route)
+
     return 0
 
 

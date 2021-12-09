@@ -1,7 +1,8 @@
 import re
 import sys
+import time
 import progressbar
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from argparse import ArgumentParser, ArgumentTypeError
 from pathlib import Path
@@ -46,6 +47,7 @@ def main() -> int:
     globalRoute = pop.getFittest()
     print ('Initial minimum distance: ' + str(globalRoute.getDistance()))
     
+    start_time = time.time()
     # Start evolving
     pbar = progressbar.ProgressBar()
     for i in pbar(range(numGenerations)):
@@ -57,11 +59,12 @@ def main() -> int:
         xaxis.append(i)
     
     print ('Global minimum distance: ' + str(globalRoute.getDistance()))
+    print (f'Running time: {(time.time() - start_time)}s')
     print ('Final Route: ' + globalRoute.toString())
-    
-    fig = plt.figure()
-    plt.plot(xaxis, yaxis, 'r-')
-    plt.show()
+
+    # fig = plt.figure()
+    # plt.plot(xaxis, yaxis, 'r-')
+    # plt.show()
     
     return 0
 
