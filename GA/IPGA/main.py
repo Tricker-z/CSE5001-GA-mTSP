@@ -2,7 +2,7 @@ import time
 from argparse import ArgumentParser, ArgumentTypeError
 from pathlib import Path
 
-from GA.IPGA.mtsp.ga import *
+from mtsp.ga import *
 from mtsp.utils import *
 
 
@@ -95,7 +95,7 @@ def main():
     ga_start(MAX_ITERS, max_time)
 
     time_end = time.time()
-    print("Running time: ", (time_end - time_start))
+    print(f'Running time: {time_end - time_start}s')
 
 
 MAX_ITERS = 20000
