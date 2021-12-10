@@ -14,6 +14,7 @@ class Population:
     def init_polar_coord(self):
         '''polar coordinate classification'''
         vetex_angle = list()
+        # closewise rotate to divide vertexes
         for idx, v in enumerate(self.graph[1:], 1):
             angle = clockwise_angle(v, self.graph[0])
             vetex_angle.append((idx, angle))
@@ -21,7 +22,7 @@ class Population:
         routes_base = [idx for idx, _ in sorted(vetex_angle, key=lambda x: x[1])]
         routes_base = split_list(routes_base, self.sales_num)
         self.routes.append(Route(routes_base, self.graph))
-        
+        # neighborhood shaking to construct population
         while len(self.routes) < self.pop_size:
             routes_variant = list()
             for route in routes_base:
@@ -31,6 +32,7 @@ class Population:
             self.routes.append(Route(routes_variant, self.graph))
 
     def get_fittest(self):
+        '''get fittest route and adjust population size'''
         self.routes.sort(key=lambda x: x.get_fitness(), reverse=True)
         self.routes = self.routes[:self.pop_size]
         return self.routes[0]

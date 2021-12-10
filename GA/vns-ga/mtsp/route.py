@@ -6,6 +6,7 @@ class Route:
         self.dist    = self.route_dist()
     
     def route_dist(self):
+        '''total route distance (fitness)'''
         total_dist = 0
         for route in self.routes:
             if len(route) == 0:

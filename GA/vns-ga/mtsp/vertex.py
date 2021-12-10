@@ -20,6 +20,7 @@ class Vertex:
         return f'({self.getX()},{self.getY()})'
     
     def distanceTo(self, v):
+        '''euclidean metric'''
         x_dist = abs(self.getX() - v.getX())
         y_dist = abs(self.getY() - v.getY())
         return sqrt(x_dist * x_dist + y_dist * y_dist)
