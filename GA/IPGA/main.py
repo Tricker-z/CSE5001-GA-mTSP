@@ -31,16 +31,16 @@ def valid_path(path: str) -> Path:
 
 
 def ga_start(max_iters, max_time, graph):
+    '''begin to run IPGA based mTSP solution'''
 
     global start_time
 
     min_nodes = N / 20
     max_nodes = N / 2
-    #     max_nodesodes = Nonex
+    #     max_nodesodes = None
     populations, breaks = generate_populations(POPULATION, N, M, min_nodes, max_nodes)
     global_best = sys.maxsize
 
-    fitness_val = []
     print("min:{}, max:{}".format(min_nodes, max_nodes))
     for i in range(max_iters):
         if time.time() - start_time >= max_time:
@@ -79,7 +79,9 @@ def ga_start(max_iters, max_time, graph):
 
         print(row_data[0])
 
+
 def cal_graph(row_data):
+    '''calculate the edge length and return the graph'''
     n = len(row_data)
 
     graph = [[0] * n for i in range(n)]
@@ -91,6 +93,7 @@ def cal_graph(row_data):
             graph[j][i] = edge
 
     return graph
+
 
 def main():
     global N, M, POPULATION, row_data, start_time, graph

@@ -2,6 +2,8 @@ import math
 
 
 def load_data(file_path_tmp):
+    '''load data from input path'''
+
     row_data = []
     with open(file_path_tmp, "r") as f:
         row_data = f.readlines()

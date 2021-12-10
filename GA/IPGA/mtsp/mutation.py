@@ -2,6 +2,7 @@ import copy
 
 
 def flip_insert(population, ij, p):
+    '''FlipInsert mutation operators'''
     population_tmp = copy.deepcopy(population[ij[0]:ij[1] + 1])
     population_tmp.reverse()
 
@@ -11,6 +12,8 @@ def flip_insert(population, ij, p):
 
 
 def swap_insert(population, ij, p):
+    '''SwapInsert mutation operators'''
+
     population_tmp = copy.deepcopy(population[ij[0]:ij[1] + 1])
     population_tmp[0], population_tmp[-1] = population_tmp[-1], population_tmp[0]
 
@@ -20,6 +23,8 @@ def swap_insert(population, ij, p):
 
 
 def left_lide_insert(population, ij, p):
+    '''LSlideInsert mutation operators'''
+
     population_tmp = copy.deepcopy(population[ij[0]:ij[1] + 1])
     population_tmp.append(population_tmp.pop(0))
 
@@ -29,6 +34,8 @@ def left_lide_insert(population, ij, p):
 
 
 def right_lide_insert(population, ij, p):
+    '''RSlideInsert mutation operators'''
+
     population_tmp = copy.deepcopy(population[ij[0]:ij[1] + 1])
     population_tmp.insert(0, population_tmp.pop(0))
 
