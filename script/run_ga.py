@@ -10,7 +10,7 @@ from shlex import split
 ga2path = {
     'baseline' : 'GA/baseline/main.py',
     'vns-ga'   : 'GA/vns-ga/main.py',
-    'ipga'     : ''
+    'ipga'     : 'GA/IPGA/main.py'
 }
 
 
@@ -42,7 +42,7 @@ def main():
         log_path.parent.mkdir(parents=True, exist_ok=True)
     
     log = open(log_path, 'a+')
-    cmd = f'python {ga_path} -i {args.input}'
+    cmd = f'python {ga_path} -i {args.input} -t 315'
     
     for idx in range(args.number):
         run(split(cmd), log)

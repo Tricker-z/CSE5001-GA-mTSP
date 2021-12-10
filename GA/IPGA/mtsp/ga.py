@@ -1,8 +1,8 @@
 import random
 import sys
 
-from GA.IPGA.mtsp.mutation import *
-from GA.IPGA.mtsp.utils import *
+from mtsp.mutation import *
+from mtsp.utils import *
 
 
 def generate_breaks(n, m, min_nodes, max_nodes=None):

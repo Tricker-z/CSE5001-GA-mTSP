@@ -11,9 +11,8 @@ def load_data(file_path_tmp):
     iso_tuple_list = []
     for i in range(1, len(row_data)):
         item = row_data[i].strip().split(" ")
-        if len(item) < 2:
+        if len(item) < 3:
             continue
-        # print(item)
         iso_tuple_list.append((int(item[1]), int(item[2])))
     return iso_tuple_list
 
