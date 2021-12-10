@@ -4,6 +4,7 @@ import numpy as np
 
 
 def clockwise_angle(v1, v2):
+    '''vector angle for polar coordinate'''
     vec_x = v1.getX() - v2.getX()
     vec_y = v1.getY() - v2.getY()
     theta = np.arctan2(vec_y, vec_x)
@@ -17,6 +18,7 @@ def split_list(items, m):
 
 
 def double_rand(start, end):
+    '''generate random values'''
     start_pos, end_pos = 0, 0
     while (start_pos >= end_pos):
         start_pos = random.randint(start, end)

@@ -8,6 +8,7 @@ MUTATE_RATE = 0.02
 class GA:
     @classmethod
     def evolve_population(self, pop):
+        '''single evolution iteration'''
         for idx in range(int(pop.pop_size / 4)):
             parent_1 = pop.get_route(2 * idx)
             parent_2 = pop.get_route(2 * idx + 1)
@@ -19,15 +20,16 @@ class GA:
 
     @classmethod
     def cross_over(self, parent1, parent2):
+        '''neighbor action-1'''
         graph = parent1.graph
         parent1 = self.merge_route(parent1)
         parent2 = self.merge_route(parent2)
-
+        # gene fragment from parent 1
         offspring = [0] * len(parent1)
         start_pos, end_pos = double_rand(0, len(parent1))
         for i in range(start_pos, end_pos):
             offspring[i] = parent1[i]
-        
+        # other gene from parent 2 in sequence
         idx = 0
         for i in range(len(parent2)):
             val = parent2[i]
@@ -42,6 +44,7 @@ class GA:
 
     @classmethod
     def mutate(self, offspring):
+        '''neighbor action-2'''
         if random.random() > MUTATE_RATE:
             return offspring
         idx1, idx2 = double_rand(0, len(offspring.routes) - 1)
@@ -49,7 +52,7 @@ class GA:
         route2 = offspring.routes[idx2]
 
         mutate_num = random.randint(0, min(len(route1), len(route2))-1)
-
+        # swap specific genes
         for _ in range(mutate_num):
             rand_idx1 = random.randint(1, len(route1)-1)
             rand_idx2 = random.randint(1, len(route2)-1)
@@ -65,7 +68,9 @@ class GA:
 
     @classmethod
     def merge_route(self, parent):
+        '''tool function for crossover'''
         merge_route = list()
+        # fill incremental id as segmentation
         fill_id = len(parent.graph)
         for i, route in enumerate(parent.routes):
             if i > 0:
@@ -77,8 +82,10 @@ class GA:
 
     @classmethod
     def splite_route(self, offspring, fill_id):
+        '''tool function for crossover'''
         routes, middle = list(), list()
         for idx in offspring:
+            # check the segmentation
             if idx >= fill_id:
                 routes.append(middle.copy())
                 middle.clear()

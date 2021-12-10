@@ -10,6 +10,7 @@ from mtsp.vertex import Vertex
 from mtsp.population import Population
 from mtsp.galogic import GA
 
+# hyper-parameters
 NUM_GENERATIONS = 20000
 
 def parse_args():
@@ -38,7 +39,7 @@ def init_graph(input_path):
     '''initialize graph as input'''
     graph = list()
     coordPattern = re.compile(r'^(?P<idx>\d+) (?P<x>\d+) (?P<y>\d+)$')
-
+    # parse the input file to construct the graph
     fp = open(input_path, 'r')
     for line in fp.read().splitlines()[1:]:
         matcher = coordPattern.match(line)
@@ -53,12 +54,14 @@ def init_graph(input_path):
 
 
 def main() -> int:
+    '''main function'''
     args = parse_args()
-
+    # load the graph from input
     graph = init_graph(args.input)
+    # initilize the population with polar coordinate
     pop = Population(args.pop, args.sales, graph)
     pop.init_polar_coord()
-
+    # initial global optimal
     global_route = pop.get_fittest()
     print(f'Initial minimum distance: {global_route.get_dist()}')
 
