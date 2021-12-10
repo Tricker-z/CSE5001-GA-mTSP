@@ -5,7 +5,13 @@ This is the code repository for *Genetic Algorithm for Multiple Traveling Salesm
 This project is running in Python environment.
 ### Prerequisites
 
-* Python 3.x
+* Python 3.7
+
+## Directory Structure
+* GA: store the three GA based mTSP soloving algorithm
+* script: store result analysis script
+* data: store the row input data for algorithms 
+* res: store the row log data including the execution information    
 
 ## Run With
 
@@ -30,4 +36,6 @@ other optimal parameters:
 * -m/--sales: the number of salesmen, 5 in default
 * -t/--time: the maximum time for running, 300 in default (should be changed according to the baseline running time)
 
+### Run Result Analysis
 
+python script/analysis_data.py
