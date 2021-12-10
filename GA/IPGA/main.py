@@ -15,7 +15,7 @@ def parse_args():
                         help='Population size')
     parser.add_argument('-m', '--sales', type=int, default=5,
                         help='Number of salesmen')
-    parser.add_argument('-t', '--time', type=int, default=100,
+    parser.add_argument('-t', '--time', type=int, default=300,
                         help='Max running time')
     return parser.parse_args()
 
@@ -30,7 +30,7 @@ def valid_path(path: str) -> Path:
     return abspath.resolve()
 
 
-def ga_start(max_iters, max_time):
+def ga_start(max_iters, max_time, graph):
 
     global start_time
 
@@ -46,7 +46,7 @@ def ga_start(max_iters, max_time):
         if time.time() - start_time >= max_time:
             break
 
-        fitness_list = [cal_fitness(populations[j], breaks[j], N, row_data) for j in range(POPULATION)]
+        fitness_list = [cal_fitness(populations[j], breaks[j], N, row_data, graph) for j in range(POPULATION)]
 
         global_best = min(global_best, min(fitness_list))
 
@@ -54,7 +54,7 @@ def ga_start(max_iters, max_time):
 
     print("Global minimum distance: {}".format(global_best))
 
-    fitness_list = [cal_fitness(populations[j], breaks[j], N, row_data) for j in range(POPULATION)]
+    fitness_list = [cal_fitness(populations[j], breaks[j], N, row_data, graph) for j in range(POPULATION)]
 
     minus_tmp = fitness_list[0]
     index_best = 0
@@ -79,20 +79,33 @@ def ga_start(max_iters, max_time):
 
         print(row_data[0])
 
+def cal_graph(row_data):
+    n = len(row_data)
+
+    graph = [[0] * n for i in range(n)]
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            edge = cal_dis(row_data[i], row_data[j])
+            graph[i][j] = edge
+            graph[j][i] = edge
+
+    return graph
 
 def main():
-    global N, M, POPULATION, row_data, start_time
+    global N, M, POPULATION, row_data, start_time, graph
     start_time = time.time()
     args = parse_args()
     POPULATION, M, max_time = args.pop, args.sales, args.time
 
     file_path_tmp = args.input
     row_data = load_data(file_path_tmp)
+    graph = cal_graph(row_data)
     N = len(row_data)
 
     time_start = time.time()
 
-    ga_start(MAX_ITERS, max_time)
+    ga_start(MAX_ITERS, max_time, graph)
 
     time_end = time.time()
     print("Running time: ", (time_end - time_start))
@@ -102,6 +115,7 @@ MAX_ITERS = 20000
 RUNS = 1
 file_path_tmp = "../../data/mtsp51.txt"
 row_data = []
+graph = []
 N = len(row_data)
 M = 5
 POPULATION = 100

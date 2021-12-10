@@ -41,7 +41,7 @@ def generate_populations(population_size, n, m, min_nodes, max_nodes=None):
     return populations, breaks
 
 
-def cal_fitness(population, break_points, n, row_data):
+def cal_fitness(population, break_points, n, row_data, graph):
     paths = [0] + break_points + [n]
     fitness_tmp = 0
     for i in range(len(paths) - 1):
@@ -49,9 +49,11 @@ def cal_fitness(population, break_points, n, row_data):
         end = paths[i + 1]  # not include
         tmp_index = 0
         for j in range(begin, end):
-            fitness_tmp += cal_dis(row_data[population[j]], row_data[tmp_index])
+            fitness_tmp += graph[tmp_index][population[j]]
+            # fitness_tmp += cal_dis(row_data[population[j]], row_data[tmp_index])
             tmp_index = population[j]
-        fitness_tmp += cal_dis(row_data[0], row_data[tmp_index])
+        # fitness_tmp += cal_dis(row_data[0], row_data[tmp_index])
+        fitness_tmp += graph[0][tmp_index]
     return fitness_tmp
 
 
