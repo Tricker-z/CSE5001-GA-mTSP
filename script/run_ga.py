@@ -42,7 +42,7 @@ def main():
         log_path.parent.mkdir(parents=True, exist_ok=True)
     
     log = open(log_path, 'a+')
-    cmd = f'python {ga_path} -i {args.input} -t 315'
+    cmd = f'python {ga_path} -i {args.input} -t 300'
     
     for idx in range(args.number):
         run(split(cmd), log)
